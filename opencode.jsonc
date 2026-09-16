@@ -8,7 +8,8 @@
   "instructions": [
     "~/.config/opencode/instructions/safety.md",
     "~/.config/opencode/instructions/style.md",
-    "~/.config/opencode/instructions/parallelism.md"
+    "~/.config/opencode/instructions/parallelism.md",
+    "~/.config/opencode/instructions/interaction.md"
   ],
   "permission": {
     "websearch": "allow",
