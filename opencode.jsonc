@@ -1,0 +1,19 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "lsp": true,
+  "tools": {
+    "websearch": true,
+    "webfetch": true
+  },
+  "instructions": [
+    "~/.config/opencode/instructions/safety.md",
+    "~/.config/opencode/instructions/style.md",
+    "~/.config/opencode/instructions/parallelism.md"
+  ],
+  "permission": {
+    "websearch": "allow",
+    "external_directory": {
+      "/tmp/**": "allow"
+    }
+  }
+}
