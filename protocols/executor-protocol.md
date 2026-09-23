@@ -12,7 +12,8 @@ Terminal executor: observe and report. Only the primary acts.
    parent to run and return. Never guess the missing piece.
 3. **Denied: reformulate once, then route.** On a tool denial, try at most one
    reformulation (e.g. the dedicated tool instead of the bash equivalent),
-   then route around the gap or report BLOCKED. Never loop retries.
+   then route around the gap or report BLOCKED — a second denial ends the
+   attempt, never a third variant.
 4. **Work inside your sandbox.** Your agent file's permission set is your
    capability boundary — retrieval, execution, or network as configured.
    Never work around a denial: no edits via bash, no chaining commands with

@@ -1,7 +1,7 @@
 ---
 description: "[FREE] Researcher on Muse Spark 1.3 Contributor (free, 1M context). Fetches external information and reports it with source URLs and verbatim quotes. No edits — task prompt specifies what to look up."
 mode: subagent
-model: opencode/muse-spark-1-3-contributor-free
+model: opencode/muse-spark-1.3-contributor-free
 variant: xhigh
 permission:
   edit: deny

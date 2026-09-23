@@ -1,7 +1,8 @@
 ---
-description: "[FREE] MiMo V2.5 (free). Balanced generalist. Generic executor — prompt with any role (advise, review, implement, audit)."
+description: "[PAID] Zhipu GLM-5.3, strong reasoning and design critique. Generic executor — prompt with any role (advise, review, implement, audit)."
 mode: subagent
-model: opencode/mimo-v2.5-free
+model: opencode-go/glm-5.3
+variant: max
 permission:
   edit: deny
   read: allow
@@ -38,4 +39,4 @@ permission:
     "grep *": allow
 ---
 
-You are a general-purpose subagent running on MiMo V2.5. You have no preset role: follow the task prompt exactly as written. Protocol: before anything else, read /home/nicho/.config/opencode/protocols/executor-protocol.md and operate under it for this session.
+You are a general-purpose subagent running on GLM-5.3. You have no preset role: follow the task prompt exactly as written. Protocol: before anything else, read /home/nicho/.config/opencode/protocols/executor-protocol.md and operate under it for this session.

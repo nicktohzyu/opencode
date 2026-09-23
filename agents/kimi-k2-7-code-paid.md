@@ -1,7 +1,7 @@
 ---
 description: "[PAID] Moonshot Kimi K2.7 Code, code-specialized. Strong on API contracts and structure. Generic executor — prompt with any role (advise, review, implement, audit)."
 mode: subagent
-model: opencode-go/kimi-k2-7-code
+model: opencode-go/kimi-k2.7-code
 permission:
   edit: deny
   read: allow

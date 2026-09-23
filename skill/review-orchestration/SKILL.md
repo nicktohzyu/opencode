@@ -9,9 +9,9 @@ Spawn executor subagents via the task tool (one call per `subagent_type`) in a s
 
 ## Tiers (cost, not capability — use full `subagent_type` strings, short names do not resolve)
 
-- `[FREE]`: atria-dawn-preview-free, big-pickle-free, ling-3-0-flash-fin-free, mimo-v2-5-free, muse-spark-1-3-contributor-free, nemotron-3-ultra-free, nemotron-3-5-lightning-free
+- `[FREE]`: atria-dawn-preview-free, big-pickle-free, ling-3-0-flash-fin-free, mimo-v2-6-flash-free, muse-spark-1-3-contributor-free, nemotron-3-ultra-free
 - `[LITE]` (budget paid): deepseek-v4-pro-lite
-- `[PAID]` (flagship): glm-5-2-paid, kimi-k2-7-code-paid, qwen3-7-max-paid
+- `[PAID]` (flagship): glm-5-3-paid, kimi-k2-7-code-paid
 
 ## Example Focus Areas (pick per review, instruct subagent)
 

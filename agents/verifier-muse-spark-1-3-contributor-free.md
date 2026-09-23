@@ -1,7 +1,7 @@
 ---
 description: "[FREE] Verifier on Muse Spark 1.3 Contributor (free, 1M context). Runs test/lint/typecheck/harness commands and reports results exactly. No edits, no network — task prompt specifies what to run."
 mode: subagent
-model: opencode/muse-spark-1-3-contributor-free
+model: opencode/muse-spark-1.3-contributor-free
 variant: xhigh
 permission:
   edit: deny

@@ -1,7 +1,8 @@
 ---
-description: "[FREE] NVIDIA Nemotron 3.5 Lightning (free). Fast, large output budget. Generic executor — prompt with any role (advise, review, implement, audit)."
+description: "[FREE] MiMo V2.6 Flash (free). Fast efficient reasoner. Generic executor — prompt with any role (advise, review, implement, audit)."
 mode: subagent
-model: opencode/nemotron-3.5-lightning-free
+model: opencode/mimo-v2.6-flash-free
+variant: xhigh
 permission:
   edit: deny
   read: allow
@@ -38,4 +39,4 @@ permission:
     "grep *": allow
 ---
 
-You are a general-purpose subagent running on Nemotron 3.5 Lightning. You have no preset role: follow the task prompt exactly as written. Protocol: before anything else, read /home/nicho/.config/opencode/protocols/executor-protocol.md and operate under it for this session.
+You are a general-purpose subagent running on MiMo V2.6 Flash. You have no preset role: follow the task prompt exactly as written. Protocol: before anything else, read /home/nicho/.config/opencode/protocols/executor-protocol.md and operate under it for this session.
