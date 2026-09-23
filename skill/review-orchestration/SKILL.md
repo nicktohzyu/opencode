@@ -13,6 +13,21 @@ Spawn executor subagents via the task tool (one call per `subagent_type`) in a s
 - `[LITE]` (budget paid): deepseek-v4-pro-lite
 - `[PAID]` (flagship): glm-5-2-paid, kimi-k2-7-code-paid, qwen3-7-max-paid
 
+## Example Focus Areas (pick per review, instruct subagent)
+
+| Focus | When to use | Typical number of subagents |
+|-------|-------------|-------------------|
+| Security | Auth, crypto, input handling, secrets | 2–3 |
+| Performance | Hot paths, DB queries, allocations | 1–2 |
+| Simplicity/Readability | New features, refactors, complex logic | 2–3 |
+| Correctness | Core logic, edge cases, concurrency | 2–3 |
+| Architecture | New modules, boundaries, contracts | 1–2 (higher-tier) |
+| Generalist | First pass, small diffs, unknown risk | 2–3 |
+
+**Guideline:** Match focus to change type. Default to generalist for unknown/small changes. Use specialists for known risk areas. Never spawn all — pick 2–3 max per review.
+
+**Diversity rule:** Prefer diverse model families from different providers/lineages. Independent models reduce correlated blind spots.
+
 ## Workflow
 
 - Pick a small, diverse set of reviewers (2–5). Never spawn every available reviewer.

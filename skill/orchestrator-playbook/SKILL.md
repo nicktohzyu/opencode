@@ -1,6 +1,6 @@
 ---
-name: subagent-playbook
-description: Use when delegating work to subagents via the task tool — picking advisors vs reviewers, writing prompts that produce triageable output, running parallel independent reviews, validating dismissals, verifying with execution. Triggers on subagent, task tool, delegate, parallel review, second opinion, triage findings.
+name: orchestrator-playbook
+description: Orchestrator-side playbook for delegating work to subagents via the task tool — picking advisors vs reviewers, writing prompts that produce triageable output, running parallel independent reviews, validating dismissals, verifying with execution. Triggers on subagent, task tool, delegate, orchestrate, parallel review, second opinion, triage findings.
 ---
 
 # Subagent Playbook
@@ -32,6 +32,36 @@ workflow around them: how to prompt, how to triage, and how to verify.
    an explicit full-trust implementer profile then — never live in the middle
    (write access without execution access can corrupt but cannot self-verify).
 
+## When to delegate: verify-cost < redo-cost
+
+Default: do the work yourself. Delegate only when the output reduces to
+evidence you can spot-check in seconds — if verifying equals redoing, you
+have delegated nothing. Executors can find but cannot verify (read-only, no
+execution, no network), so every delegated claim ships a verification debt
+you must pay by re-running the read/grep yourself.
+
+Delegate:
+- Mechanically-verifiable retrieval: call sites, grep patterns, file locations
+- Disagreement generation (`adviser-chat`) — divergence is the product
+- Parallel review (`review-orchestration`) on a diff
+- Mapping 3+ independent unknowns with zero shared context
+- Verbose offload: dozens of tool results in, one summary out
+  (>1000 tokens you won't reuse)
+- Read-only or cheap-model isolation, or an explicit verification checkpoint
+
+Do not delegate:
+- Design and architecture judgment ("is this sound?")
+- Investigation that will birth a deeper question mid-stream
+- Anything where verifying equals redoing
+- Implementation, commits, pushes, releases — primary-only
+
+Hard invariants:
+1. Uncited claims are rejections, not findings — require `file:line` plus a
+   verbatim quote.
+2. Never chain subagent output into another subagent — it compounds
+   ungrounded inference.
+3. Never delegate past the point where verifying equals redoing.
+
 ## Prompt skeleton
 
 Every subagent prompt needs four parts. Missing any one degrades output sharply:
@@ -48,6 +78,14 @@ Every subagent prompt needs four parts. Missing any one degrades output sharply:
    - Reviews: `[SEVERE/HIGH/MED/LOW] file:line — issue — suggested fix`
    - Validation: `CONFIRM` or `CHALLENGE` per item, with reasoning
    - Plans: concrete sketch in the repo's own style/idioms, not pseudocode
+
+### Blocked and denied: executors inherit the protocol
+
+Executors operate under `/home/nicho/.config/opencode/protocols/executor-protocol.md`
+(pointed to from every executor file): on missing input they return `BLOCKED:`
+plus exactly what is needed; on tool denial they reformulate at most once.
+Do not re-explain this in prompts — brief the triageable output format, and
+resume via `task_id` with answers when BLOCKED arrives.
 
 ## Workflow
 

@@ -1,0 +1,50 @@
+agents/ — generic executor subagents
+=======================================
+(File is extensionless on purpose: the agent loader scans *.md, and a
+README.md without agent frontmatter risks a startup-breaking parse error.)
+
+What lives here
+---------------
+One file per model. Every agent is a GENERIC executor: the model is pinned,
+the role comes entirely from the task prompt. There are no role-specialized
+agents — specialization via static prompts plus dynamic briefs caused
+instruction conflicts, and scaled as models × roles instead of models.
+
+Naming: <model-slug>-<tier>. Tiers are COST, not capability:
+  -free   no-cost models (6)
+  -lite   budget paid, currently deepseek-v4-pro only
+  -paid   flagship paid (glm, kimi, qwen)
+Dots in model ids become hyphens; a redundant trailing -free is collapsed
+(e.g. mimo-v2-5-free, not mimo-v2-5-free-free).
+
+Prompt: two sentences (executor frame + follow the task prompt). Deliberately
+minimal — output formats and specs belong in per-task briefs, which is where
+the review-orchestration and adviser-chat skills put them.
+
+Permissions (identical on all files — least privilege, read-only posture)
+-------------------------------------------------------------------------
+Executors observe and report; only the primary acts. Allowed: read tools,
+instructions/ + /tmp/ dirs, git read-only subcommands (plain and `git -C`
+forms), and read-only text tools (cat/head/tail/wc/sort/uniq/cut/tr/jq/rg/grep,
+space-required form so bare invocations can't hang on stdin). Denied: edit
+(covers writes), all other bash, webfetch/websearch.
+Rationale: edit-without-execution can corrupt but cannot self-verify, and no
+current role (advise/review/audit) needs writes or network. `sed`/`awk`/`find`/
+`xargs`/interpreters/network tools stay denied: their safe and destructive
+modes are indistinguishable by prefix. Verified live: chained commands
+(`git status; echo X`) are denied despite prefix match — the allowlist is
+enforced, not theater.
+
+Adding a model
+--------------
+1. Copy the nearest-tier file. Set `model:` to the exact provider/model id and
+   rewrite the one-line description ([TIER] + blurb + generic-executor line).
+2. Keep the permission block and two-sentence prompt byte-identical.
+3. Add the new `subagent_type` to the Tiers list in
+   ../skill/review-orchestration/SKILL.md (full names only — short names do
+   not resolve).
+4. Restart opencode (agents/skills/permissions load at startup).
+
+Retiring a model: delete its file, remove it from the skill tier list,
+restart. If in doubt, keep the file — a stale roster entry costs nothing
+until invoked, while a missing one breaks saved prompts that name it.

@@ -9,7 +9,8 @@
     "~/.config/opencode/instructions/safety.md",
     "~/.config/opencode/instructions/style.md",
     "~/.config/opencode/instructions/parallelism.md",
-    "~/.config/opencode/instructions/interaction.md"
+    "~/.config/opencode/instructions/interaction.md",
+    "~/.config/opencode/instructions/delegation.md"
   ],
   "permission": {
     "websearch": "allow",

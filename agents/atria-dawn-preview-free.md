@@ -7,6 +7,7 @@ permission:
   read: allow
   webfetch: deny
   websearch: deny
+  task: deny
   external_directory:
     "~/.config/opencode/instructions/**": allow
     "~/.config/opencode/protocols/**": allow
