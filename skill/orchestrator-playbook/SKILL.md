@@ -42,8 +42,10 @@ you must pay by re-running the read/grep yourself.
 
 Delegate:
 - Mechanically-verifiable retrieval: call sites, grep patterns, file locations
-- Disagreement generation (`adviser-chat`) — divergence is the product
-- Parallel review (`review-orchestration`) on a diff
+- Disagreement generation (`adviser-chat`) — approach-level advisory where
+  rebuild may be the answer; divergence is the product
+- Parallel review (`review-orchestration`) — implementation-level review of
+  a fixed target; adversarial
 - Mapping 3+ independent unknowns with zero shared context
 - Verbose offload: dozens of tool results in, one summary out
   (>1000 tokens you won't reuse)

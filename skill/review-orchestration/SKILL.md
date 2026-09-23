@@ -28,6 +28,27 @@ Spawn executor subagents via the task tool (one call per `subagent_type`) in a s
 
 **Diversity rule:** Prefer diverse model families from different providers/lineages. Independent models reduce correlated blind spots.
 
+## Brief
+
+Reviewers check a fixed target; they do not redesign it. (For approach-level
+advice where rebuild may be the answer, use `adviser-chat`.) Every brief
+declares:
+
+1. **Adversarial frame** — "Review to reject: assume the diff contains at
+   least one defect. Findings over approval."
+2. **Static reasoning only** — executors cannot execute. Forbid causal claims
+   about runtime behavior; anything needing a run goes in assistance requests.
+3. **Severity-tagged findings** — `[SEVERE/HIGH/MED/LOW] file:line — issue —
+   suggested fix`. Report all SEVERE/HIGH without limit, cap MED/LOW trivia.
+4. **Assistance requests** — things the reviewer wanted to execute but
+   couldn't: one runnable command per line (with workdir) plus the exact
+   expected-output shape, for the orchestrator or verifier tier to run blind.
+5. **Docs consistency and revert verdict** — cross-check the implementation
+   against its docs; contradictions are findings. Close with the one change
+   you would revert, if any.
+6. **Scope discipline** — stay inside the briefed files/diff; name anything
+   you deliberately excluded.
+
 ## Workflow
 
 - Pick a small, diverse set of reviewers (2–5). Never spawn every available reviewer.

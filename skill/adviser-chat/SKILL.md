@@ -1,11 +1,15 @@
 ---
 name: adviser-chat
-description: Use when you need a cheap second opinion, plan critique, or methodology check from a different model family via generic executor subagents. Covers model-agnostic adviser selection, single-round parallel workflow, and synthesis.
+description: Use when you need a cheap second opinion at the approach/design level, plan critique, or methodology check from a different model family via generic executor subagents. Covers model-agnostic adviser selection, alternatives-with-tradeoffs briefing, single-round parallel workflow, and synthesis.
 ---
 
 # Adviser Chat
 
 Get a second perspective from a fresh executor subagent with a different model family. Single round by default.
+
+Advisors explore the approach/design space; they are not reviewers. The target
+is not fixed — rebuild-from-scratch may be the right answer. (For
+implementation review of a fixed target, use `review-orchestration`.)
 
 ## When to use
 
@@ -17,20 +21,34 @@ Do not use for pure implementation work, single-file edits, or when the primary 
 ## Selection (model-agnostic)
 
 - Pick a small, diverse set of executor subagents whose model family differs from the primary (free tier first; escalate to lite/paid only if high-stakes or the first pass surfaces real issues). Any `*-free`/`*-lite`/`*-paid` executor works since its role is dynamically specified by your prompt.
-- Prefer diverse families over similar ones. Never spawn every available chat agent.
+- Prefer diverse families over similar ones. Never spawn every available executor.
 - Subagents are terminal executors and cannot delegate further.
+
+## Brief
+
+Beyond the playbook's prompt skeleton, every advisor brief declares:
+
+1. **Anti-anchoring frame** — "Do not anchor on the proposed approach merely
+   because it was proposed. Present the best alternative shapes with honest
+   tradeoffs, then rank them against the proposal."
+2. **Redesign scope** — one of: `rebuild in scope` (greenfield allowed; the
+   approach may be condemned) or `tweaks only` (implementation exists and
+   ships; advise on adjustments within it). An advisor guessing wrong about
+   this wastes the round.
+3. **Severity-gated output** — findings carry severity tags (the advisor's own
+   judgment): report all SEVERE/HIGH without limit, cap MED/LOW trivia.
+   Verdict = everything you'd block on, one sentence each. Terse, no hedging.
+4. **Scope bounds** — declare what's out of scope (files, areas, questions)
+   alongside the redesign scope. Don't review whatever catches your eye.
 
 ## Workflow
 
 1. **Architect position first:** write down your initial position, 3 strongest reasons, and the main risk in your preferred path — before reading advisers.
 2. **Gather compact context only:** decision question, constraints, success criteria, and minimal snippets/metrics. Never feed the full conversation transcript.
 3. **Launch in parallel:** one Task call per `subagent_type` in a single message. Require a structured response:
-   - Position — 1-2 sentences
-   - Reasoning — 3 concise bullets
-   - Risk — biggest risk in your recommendation
-   - Surprise — one thing others may miss
-
-   Keep it under 300 words. Be direct, no hedging.
+   - Alternatives — up to 3 shapes including the proposal, honest tradeoffs each
+   - Ranking — ordered, one-line reason per position
+   - Blockers — anything you'd stop the design over, one sentence each
 4. **Synthesize with guardrails:** do not dismiss a view without explaining why; if a voice changed your recommendation say so; always include the strongest dissent even if rejected; if two voices align against your initial position treat it as a real signal. Keep raw positions visible before the verdict.
 
 ## Iterate only when
