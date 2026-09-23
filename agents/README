@@ -5,35 +5,54 @@ README.md without agent frontmatter risks a startup-breaking parse error.)
 
 What lives here
 ---------------
-One file per model. Every agent is a GENERIC executor: the model is pinned,
-the role comes entirely from the task prompt. There are no role-specialized
-agents — specialization via static prompts plus dynamic briefs caused
-instruction conflicts, and scaled as models × roles instead of models.
+One file per model, plus one file per role-specialized tier. The bulk of the
+roster is GENERIC executors: the model is pinned, the role comes entirely
+from the task prompt. Two single-model tiers carry their role in the file
+instead — `verifier-*` (runs tests/linters/harnesses, reports results) and
+`researcher-*` (fetches external sources, reports with URLs and quotes) —
+because their permission shapes differ. Tiers stay single-model: execution
+output is deterministic and research fan-out is serial, so neither benefits
+from model diversity.
 
-Naming: <model-slug>-<tier>. Tiers are COST, not capability:
-  -free   no-cost models (6)
+Naming: <model-slug>-<tier> for executors; <role>-<model-slug>-<tier> for the
+specialized tiers. Cost tiers are COST, not capability:
+  -free   no-cost models (7 executors; verifier and researcher also free)
   -lite   budget paid, currently deepseek-v4-pro only
   -paid   flagship paid (glm, kimi, qwen)
 Dots in model ids become hyphens; a redundant trailing -free is collapsed
 (e.g. mimo-v2-5-free, not mimo-v2-5-free-free).
 
-Prompt: two sentences (executor frame + follow the task prompt). Deliberately
-minimal — output formats and specs belong in per-task briefs, which is where
-the review-orchestration and adviser-chat skills put them.
+Prompt: role frame + follow-the-task-prompt + one pointer line to
+protocols/executor-protocol.md (shared behavior: BLOCKED, denial handling,
+sandbox discipline). Deliberately minimal — output formats and specs belong
+in per-task briefs, which is where the review-orchestration and adviser-chat
+skills put them.
 
-Permissions (identical on all files — least privilege, read-only posture)
--------------------------------------------------------------------------
-Executors observe and report; only the primary acts. Allowed: read tools,
-instructions/ + /tmp/ dirs, git read-only subcommands (plain and `git -C`
-forms), and read-only text tools (cat/head/tail/wc/sort/uniq/cut/tr/jq/rg/grep,
-space-required form so bare invocations can't hang on stdin). Denied: edit
-(covers writes), all other bash, webfetch/websearch.
-Rationale: edit-without-execution can corrupt but cannot self-verify, and no
-current role (advise/review/audit) needs writes or network. `sed`/`awk`/`find`/
-`xargs`/interpreters/network tools stay denied: their safe and destructive
-modes are indistinguishable by prefix. Verified live: chained commands
-(`git status; echo X`) are denied despite prefix match — the allowlist is
-enforced, not theater.
+Permissions (three profiles — least privilege per role)
+-------------------------------------------------------
+Executors observe and report; only the primary acts. Base profile (all
+files): read tools, instructions/ + protocols/ + /tmp/ dirs, git read-only
+subcommands (plain and `git -C` forms), read-only text tools
+(wc/sort/uniq/cut/tr/jq/rg/grep, space-required form so bare invocations
+can't hang on stdin). Denied everywhere: edit (covers writes), task
+(executors are terminal), all other bash.
+- Executors: base profile, webfetch/websearch denied. Hermetic by
+  construction — output derives only from repo and prompt.
+- Verifier: base profile plus execution-shaped bash (pytest, npm test,
+  go/cargo test, tsc, ruff, eslint, node --check, node *.js*). No direct
+  edit tools; execution can still write (test logs), so the promise is
+  containment, not incorruptibility. Project-specific runners belong in
+  per-project agent files, not here.
+- Researcher: base profile plus webfetch/websearch. Treats fetched content
+  as untrusted data; every external claim needs URL + verbatim quote.
+Rationale: `sed`/`awk`/`find`/`xargs`/interpreters stay denied on executors:
+their safe and destructive modes are indistinguishable by prefix. Verified
+live: chained commands (`git status; echo X`, pipes) are denied despite
+prefix match — the allowlist is enforced, not theater. Each tier's boundary
+is restated subagent-side in ../protocols/ (executor-, verifier-,
+researcher-protocol.md). Rules 1–4 are identical across the three files —
+keep them in sync when editing; the sync note lives here, not in the
+protocol files, because those are read on every spawn.
 
 Adding a model
 --------------

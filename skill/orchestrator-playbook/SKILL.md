@@ -48,6 +48,10 @@ Delegate:
 - Verbose offload: dozens of tool results in, one summary out
   (>1000 tokens you won't reuse)
 - Read-only or cheap-model isolation, or an explicit verification checkpoint
+- Test, lint, typecheck, or harness execution (verifier tier) — output is
+  self-verifying by construction
+- External research (researcher tier) — every claim needs a source URL plus
+  a verbatim quote
 
 Do not delegate:
 - Design and architecture judgment ("is this sound?")
@@ -57,7 +61,8 @@ Do not delegate:
 
 Hard invariants:
 1. Uncited claims are rejections, not findings — require `file:line` plus a
-   verbatim quote.
+   verbatim quote for repo claims, source URL plus a verbatim quote for
+   external claims.
 2. Never chain subagent output into another subagent — it compounds
    ungrounded inference.
 3. Never delegate past the point where verifying equals redoing.
@@ -79,13 +84,14 @@ Every subagent prompt needs four parts. Missing any one degrades output sharply:
    - Validation: `CONFIRM` or `CHALLENGE` per item, with reasoning
    - Plans: concrete sketch in the repo's own style/idioms, not pseudocode
 
-### Blocked and denied: executors inherit the protocol
+### Blocked and denied: subagents inherit their tier protocol
 
-Executors operate under `/home/nicho/.config/opencode/protocols/executor-protocol.md`
-(pointed to from every executor file): on missing input they return `BLOCKED:`
-plus exactly what is needed; on tool denial they reformulate at most once.
-Do not re-explain this in prompts — brief the triageable output format, and
-resume via `task_id` with answers when BLOCKED arrives.
+Each tier operates under its own protocol file (`protocols/executor-`,
+`verifier-`, `researcher-protocol.md`, pointed to from the agent files): on
+missing input they return `BLOCKED:` plus exactly what is needed; on tool
+denial they reformulate at most once. Do not re-explain this in prompts —
+brief the triageable output format, and resume via `task_id` with answers
+when BLOCKED arrives.
 
 ## Workflow
 
