@@ -47,9 +47,10 @@ can't hang on stdin). Denied everywhere: edit (covers writes), task
   as untrusted data; every external claim needs URL + verbatim quote.
 Rationale: `sed`/`awk`/`find`/`xargs`/interpreters stay denied on executors:
 their safe and destructive modes are indistinguishable by prefix. Verified
-live: chained commands (`git status; echo X`, pipes) are denied despite
-prefix match — the allowlist is enforced, not theater. Each tier's boundary
-is restated subagent-side in ../protocols/ (executor-, verifier-,
+live: a chain (`;`, `&&`, `||`, `|`, `( )`) is checked per segment — every
+command in it must individually match the allowlist, or the whole chain is
+denied. (Chains of allowlisted commands still run; chaining composes within
+the allowlist, not past it.) Each tier's boundary is restated subagent-side in ../protocols/ (executor-, verifier-,
 researcher-protocol.md). Rules 1–4 are identical across the three files —
 keep them in sync when editing; the sync note lives here, not in the
 protocol files, because those are read on every spawn.
@@ -68,7 +69,13 @@ Adding a model
 4. Cross-check every `model:` value against the registry before restarting:
    opencode models > /tmp/models.txt, then confirm each file's value matches
    a line verbatim (dots, not filename hyphens).
-5. Restart opencode (agents/skills/permissions load at startup).
+5. Confirm the skill tier list and the roster agree:
+   ls agents | sed 's/\.md$//' | sort > /tmp/roster.txt, then check every
+   roster name appears in the Tiers list of
+   ../skill/review-orchestration/SKILL.md (verifier-*/researcher-* are
+   intentionally absent — single-model tiers, not reviewers). A missing entry
+   fails only at orchestration time, not at load.
+6. Restart opencode (agents/skills/permissions load at startup).
 
 Retiring a model: delete its file, remove it from the skill tier list,
 restart. If in doubt, keep the file — a stale roster entry costs nothing

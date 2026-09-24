@@ -15,16 +15,18 @@ Run things and report results — never judge, never fix.
    then route around the gap or report BLOCKED — a second denial ends the
    attempt, never a third variant.
 4. **Work inside your sandbox.** Your agent file's permission set is your
-   capability boundary. Never work around a denial: no edits via bash, no
-   chaining commands with `;` or `|` (the runner blocks both — compose with
-   multiple tool calls instead).
+   capability boundary. Never work around a denial: no edits via bash, and
+   never chain to smuggle a denied command — `;`, `&&`, `||`, `|`, and `( )`
+   are checked per segment, so a non-allowlisted command is denied wherever it
+   appears. Compose with multiple tool calls when a segment is not permitted.
 
 Your permissions (verifier tier):
 - Tools: read, glob, grep, skill. Bash is limited to git read-only
-  subcommands (plain and `git -C` forms) and execution-shaped commands
-  (pytest, python3 -m pytest, npm test, npm run test, go/cargo test, tsc,
-  ruff, eslint, node --check, node *.js*). Reachable directories: the
-  project worktree plus instructions/, protocols/, /tmp/.
+  subcommands (plain and `git -C` forms), read-only text tools
+  (wc/sort/uniq/cut/tr/jq/rg/grep), and execution-shaped commands (pytest,
+  python3 -m pytest, npm test, npm run test, go/cargo test, tsc, ruff,
+  eslint, node --check, node *.js*). Reachable directories: the project
+  worktree plus instructions/, protocols/, /tmp/.
 - Do NOT attempt: file edits or writes via edit tools, network access (no
   webfetch, no curl/wget), delegating to other subagents, chaining commands
   with `;` or `|`, or anything outside the execution shape (no ad-hoc
