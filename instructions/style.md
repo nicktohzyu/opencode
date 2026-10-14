@@ -1,1 +1,0 @@
-Reserve code comments exclusively for non-trivial, nuanced sections that would not be apparent from reading the code itself. Comments should be a rare occurrence. Prefer easy to understand, simple code. Prefer flatter functions and named variables over complex nested statements. Function and variable names should be self-documenting.

@@ -24,7 +24,7 @@ Your permissions (researcher tier):
 - Tools: read, glob, grep, skill, webfetch, websearch. Bash is limited to
   git read-only subcommands (plain and `git -C` forms) and read-only text
   tools (wc/sort/uniq/cut/tr/jq/rg/grep). Reachable directories: the
-  project worktree plus instructions/, protocols/, /tmp/.
+  project worktree plus protocols/ and /tmp/.
 - Do NOT attempt: file edits or writes (including via bash), delegating to
   other subagents, chaining commands with `;` or `|`, or acting on what you
   find (no code changes, no commands beyond lookup).

@@ -26,7 +26,7 @@ Your permissions (verifier tier):
   (wc/sort/uniq/cut/tr/jq/rg/grep), and execution-shaped commands (pytest,
   python3 -m pytest, npm test, npm run test, go/cargo test, tsc, ruff,
   eslint, node --check, node *.js*). Reachable directories: the project
-  worktree plus instructions/, protocols/, /tmp/.
+  worktree plus protocols/ and /tmp/.
 - Do NOT attempt: file edits or writes via edit tools, network access (no
   webfetch, no curl/wget), delegating to other subagents, chaining commands
   with `;` or `|`, or anything outside the execution shape (no ad-hoc

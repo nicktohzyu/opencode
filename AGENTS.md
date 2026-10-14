@@ -1,6 +1,6 @@
 # Global Instructions
 
-Consolidated into this global `AGENTS.md` on 2026-10-14 during the V1 → V2 migration. V2 does not resolve the `instructions` config field; it loads global and ambient `AGENTS.md` files. The original `instructions/*.md` files are left in place for now as the source copies.
+Consolidated into this global `AGENTS.md` on 2026-10-14 during the V1 → V2 migration. V2 does not resolve the `instructions` config field; it loads global and ambient `AGENTS.md` files.
 
 ## Safety
 

@@ -41,7 +41,7 @@ skills put them.
 Permissions (three profiles — least privilege per role)
 -------------------------------------------------------
 Executors observe and report; only the primary acts. Base profile (all
-files): read tools, instructions/ + protocols/ + /tmp/ dirs, git read-only
+files): read tools, protocols/ + /tmp/ dirs, git read-only
 subcommands (plain and `git -C` forms), read-only text tools
 (wc/sort/uniq/cut/tr/jq/rg/grep, space-required form so bare invocations
 can't hang on stdin). Denied everywhere: edit (covers writes), task

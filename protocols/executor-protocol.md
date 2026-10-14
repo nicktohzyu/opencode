@@ -25,7 +25,7 @@ Your permissions (executor tier):
 - Tools: read, glob, grep, skill. Bash is limited to git read-only
   subcommands (plain and `git -C` forms) and read-only text tools
   (wc/sort/uniq/cut/tr/jq/rg/grep). Reachable directories: the project
-  worktree plus instructions/, protocols/, /tmp/.
+  worktree plus protocols/ and /tmp/.
 - Do NOT attempt: file edits or writes (including via bash — no stream
   redirection, no sed/awk/interpreters), network access (no webfetch, no
   curl/wget), delegating to other subagents, or chaining commands with

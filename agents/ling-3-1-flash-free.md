@@ -19,9 +19,6 @@ permissions:
     resource: "*"
     effect: deny
   - action: external_directory
-    resource: "~/.config/opencode/instructions/**"
-    effect: allow
-  - action: external_directory
     resource: "~/.config/opencode/protocols/**"
     effect: allow
   - action: external_directory
