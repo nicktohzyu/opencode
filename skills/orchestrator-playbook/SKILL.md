@@ -1,6 +1,6 @@
 ---
 name: orchestrator-playbook
-description: Orchestrator-side playbook for delegating work to subagents via the task tool — picking advisors vs reviewers, writing prompts that produce triageable output, running parallel independent reviews, validating dismissals, verifying with execution. Triggers on subagent, task tool, delegate, orchestrate, parallel review, second opinion, triage findings.
+description: Orchestrator-side playbook for delegating work to subagents via the subagent tool — picking advisors vs reviewers, writing prompts that produce triageable output, running parallel independent reviews, validating dismissals, verifying with execution. Triggers on subagent, subagent tool, delegate, orchestrate, parallel review, second opinion, triage findings.
 ---
 
 # Subagent Playbook
@@ -16,7 +16,7 @@ workflow around them: how to prompt, how to triage, and how to verify.
    least one confident error until verified.
 2. **Cheap breadth, then targeted depth.** Free-tier models in parallel for
    findings (diverse lineages give independent signals); one advisor serially
-   for judgment. Escalate to lite, then paid specialists, only for what survives
+   for judgment. The roster is free-only — spend depth on diverse families
    the cheap pass.
 3. **Dismissals get more scrutiny than fixes.** A wrongly-applied fix wastes
    minutes; a wrongly-dismissed finding ships a bug. Task an advisor explicitly
@@ -24,7 +24,7 @@ workflow around them: how to prompt, how to triage, and how to verify.
 4. **Ground truth is executable, not consensual.** Reviewer disagreements are
    resolved by running code/tests, never by majority vote.
 5. **Continuity for advisors, independence for reviewers.** Resume one advisor
-   session (`task_id`) so context accumulates; always launch reviewers fresh so
+   session (by session ID) so context accumulates; always launch reviewers fresh so
    prior conclusions can't anchor them.
 6. **Executors observe and report; only the primary acts.** Keep executor
    permissions read-only (edit denied, git-scoped bash, no network tools) and
@@ -86,13 +86,18 @@ Every subagent prompt needs four parts. Missing any one degrades output sharply:
    - Validation: `CONFIRM` or `CHALLENGE` per item, with reasoning
    - Plans: concrete sketch in the repo's own style/idioms, not pseudocode
 
+Spend effort deliberately: the spawn's `model` parameter accepts
+`provider/model#variant`, so reasoning effort scales per task — cheap breadth
+stays cheap, high-stakes passes go deep (variants per review-orchestration's
+Effort per spawn).
+
 ### Blocked and denied: subagents inherit their tier protocol
 
 Each tier operates under its own protocol file (`protocols/executor-`,
 `verifier-`, `researcher-protocol.md`, pointed to from the agent files): on
 missing input they return `BLOCKED:` plus exactly what is needed; on tool
 denial they reformulate at most once. Do not re-explain this in prompts —
-brief the triageable output format, and resume via `task_id` with answers
+brief the triageable output format, and resume via the session ID with answers
 when BLOCKED arrives.
 
 ## Workflow

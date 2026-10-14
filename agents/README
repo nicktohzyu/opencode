@@ -17,10 +17,20 @@ from model diversity.
 Naming: <model-slug>-<tier> for executors; <role>-<model-slug>-<tier> for the
 specialized tiers. Cost tiers are COST, not capability:
   -free   no-cost models (6 executors; verifier and researcher also free)
-  -lite   budget paid, currently deepseek-v4-pro only
-  -paid   flagship paid (glm, kimi)
 Dots in model ids become hyphens; a redundant trailing -free is collapsed
 (e.g. mimo-v2-6-flash-free, not mimo-v2-6-flash-free-free).
+
+Paid tiers: none as of 2026-10-14. deepseek-v4-pro-lite, glm-5-3-paid, and
+kimi-k2-7-code-paid ran on opencode-go and stopped spawning when the Go
+subscription lapsed (kimi/glm: "An active OpenCode Go subscription is required";
+deepseek: requires Global region routing). atria-dawn-preview-free ran on a
+native providers.atria config entry (its V1 plugin never loaded in V2) and was
+retired when the Atria free preview ended; the provider block went with it.
+big-pickle-free was removed at the owner's request. All five files are parked
+in /tmp/opencode/retired-agents — restore them (and re-add to the skill tier
+lists) if those services come back. ling-3-1-flash-free runs
+opencode/ling-3.1-flash-free (renamed from ling-3-0-flash-fin-free when ling-3.0
+died upstream despite an active catalog entry).
 
 Prompt: role frame + follow-the-task-prompt + one pointer line to
 protocols/executor-protocol.md (shared behavior: BLOCKED, denial handling,
@@ -63,8 +73,8 @@ Adding a model
    string (e.g. file `muse-spark-1-3-...` but `model: opencode/muse-spark-1.3-...`).
    Verify with `opencode models` — a near-miss fails only at spawn, not at load.
 2. Keep the permission block and two-sentence prompt byte-identical.
-3. Add the new `subagent_type` to the Tiers list in
-   ../skill/review-orchestration/SKILL.md (full names only — short names do
+3. Add the new agent ID to the Tiers list in
+   ../skills/review-orchestration/SKILL.md (full names only — short names do
    not resolve).
 4. Cross-check every `model:` value against the registry before restarting:
    opencode models > /tmp/models.txt, then confirm each file's value matches
@@ -72,7 +82,7 @@ Adding a model
 5. Confirm the skill tier list and the roster agree:
    ls agents | sed 's/\.md$//' | sort > /tmp/roster.txt, then check every
    roster name appears in the Tiers list of
-   ../skill/review-orchestration/SKILL.md (verifier-*/researcher-* are
+   ../skills/review-orchestration/SKILL.md (verifier-*/researcher-* are
    intentionally absent — single-model tiers, not reviewers). A missing entry
    fails only at orchestration time, not at load.
 6. Restart opencode (agents/skills/permissions load at startup).

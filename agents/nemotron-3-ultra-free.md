@@ -2,40 +2,100 @@
 description: "[FREE] NVIDIA Nemotron 3 Ultra (free). Distinct training lineage, strong on large inputs. Generic executor — prompt with any role (advise, review, implement, audit)."
 mode: subagent
 model: opencode/nemotron-3-ultra-free
-permission:
-  edit: deny
-  read: allow
-  webfetch: deny
-  websearch: deny
-  task: deny
-  external_directory:
-    "~/.config/opencode/instructions/**": allow
-    "~/.config/opencode/protocols/**": allow
-    "/tmp/**": allow
-  bash:
-    "*": deny
-    "git diff*": allow
-    "git log*": allow
-    "git show*": allow
-    "git blame*": allow
-    "git status*": allow
-    "git branch*": allow
-    "git describe*": allow
-    "git -C * diff*": allow
-    "git -C * log*": allow
-    "git -C * show*": allow
-    "git -C * blame*": allow
-    "git -C * status*": allow
-    "git -C * branch*": allow
-    "git -C * describe*": allow
-    "wc *": allow
-    "sort *": allow
-    "uniq *": allow
-    "cut *": allow
-    "tr *": allow
-    "jq *": allow
-    "rg *": allow
-    "grep *": allow
+permissions:
+  - action: edit
+    resource: "*"
+    effect: deny
+  - action: read
+    resource: "*"
+    effect: allow
+  - action: webfetch
+    resource: "*"
+    effect: deny
+  - action: websearch
+    resource: "*"
+    effect: deny
+  - action: subagent
+    resource: "*"
+    effect: deny
+  - action: external_directory
+    resource: "~/.config/opencode/instructions/**"
+    effect: allow
+  - action: external_directory
+    resource: "~/.config/opencode/protocols/**"
+    effect: allow
+  - action: external_directory
+    resource: "/tmp/**"
+    effect: allow
+  - action: shell
+    resource: "*"
+    effect: deny
+  - action: shell
+    resource: "git diff*"
+    effect: allow
+  - action: shell
+    resource: "git log*"
+    effect: allow
+  - action: shell
+    resource: "git show*"
+    effect: allow
+  - action: shell
+    resource: "git blame*"
+    effect: allow
+  - action: shell
+    resource: "git status*"
+    effect: allow
+  - action: shell
+    resource: "git branch*"
+    effect: allow
+  - action: shell
+    resource: "git describe*"
+    effect: allow
+  - action: shell
+    resource: "git -C * diff*"
+    effect: allow
+  - action: shell
+    resource: "git -C * log*"
+    effect: allow
+  - action: shell
+    resource: "git -C * show*"
+    effect: allow
+  - action: shell
+    resource: "git -C * blame*"
+    effect: allow
+  - action: shell
+    resource: "git -C * status*"
+    effect: allow
+  - action: shell
+    resource: "git -C * branch*"
+    effect: allow
+  - action: shell
+    resource: "git -C * describe*"
+    effect: allow
+  - action: shell
+    resource: "wc *"
+    effect: allow
+  - action: shell
+    resource: "sort *"
+    effect: allow
+  - action: shell
+    resource: "uniq *"
+    effect: allow
+  - action: shell
+    resource: "cut *"
+    effect: allow
+  - action: shell
+    resource: "tr *"
+    effect: allow
+  - action: shell
+    resource: "jq *"
+    effect: allow
+  - action: shell
+    resource: "rg *"
+    effect: allow
+  - action: shell
+    resource: "grep *"
+    effect: allow
 ---
 
 You are a general-purpose subagent running on Nemotron 3 Ultra. You have no preset role: follow the task prompt exactly as written. Protocol: before anything else, read /home/nicho/.config/opencode/protocols/executor-protocol.md and operate under it for this session.
