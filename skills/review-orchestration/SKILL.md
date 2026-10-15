@@ -15,12 +15,16 @@ Spawn executor subagents via the subagent tool (one call per agent ID) in a sing
 ## Effort per spawn
 
 The roster names agents; the `subagent` tool's `model` parameter also
-accepts `provider/model#variant` per call (e.g.
-`opencode/muse-spark-1.3-contributor-free#xhigh`). The agent file's model is
-only the default — the parent can scale reasoning effort per task: deep for
-high-stakes or narrow re-check passes, cheap for mechanical sweeps. Variants
-are catalog-defined per model and change over time; an unavailable variant
-fails the spawn with `Variant unavailable for <model>: <variant>`.
+accepts `provider/model#variant` per call — e.g.
+`opencode/deepseek-v4.1-flash-free#max` for deep passes or `#low` for
+mechanical sweeps; `opencode/muse-spark-1.3-contributor-free` tops out at
+`#xhigh`. The agent file's model is only the default — the parent can scale
+reasoning effort per task: deep for high-stakes or narrow re-check passes,
+cheap for mechanical sweeps. Variants are catalog-defined per model and
+change over time; an unavailable variant fails the spawn with
+`Variant unavailable for <model>: <variant>`. A model ID that is not in the
+roster also works — useful for trialing new free models before adding an
+agent file.
 
 ## Example Focus Areas (pick per review, instruct subagent)
 
@@ -72,11 +76,14 @@ declares:
 
 ## On failure
 
-Thinking-budget exhaustion (not context truncation) causes empty/truncated results: no completed deliverable, cut off mid-reasoning, no tool/API error.
+Two free-tier failure modes look alike: empty/truncated results (thinking-budget exhaustion — no completed deliverable, cut off mid-reasoning, no tool/API error) and provider-side request errors (403/429, upstream/server errors, odd gate messages). Both are usually transient.
 
 1. Resume via the session ID (fresh thinking budget).
 2. If the resume fails, one fresh retry (no session ID).
-3. If that fails, proceed without that reviewer and note the gap.
+3. If a provider-side error persists, substitute a different model family for that reviewer.
+4. If that fails too, proceed without that reviewer and note the gap.
+
+A model retired or renamed mid-flight fails the spawn outright; treat it as a roster-maintenance trigger (`scripts/verify-roster.sh`).
 
 ## Iterate (optional)
 

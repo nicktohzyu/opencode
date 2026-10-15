@@ -53,7 +53,7 @@ Beyond the playbook's prompt skeleton, every advisor brief declares:
 
 ## Iterate only when
 
-- Result was empty/truncated (thinking-budget abort): resume via the session ID (fresh budget), then one fresh retry max, else proceed without it and note the gap.
+- Result was empty/truncated (thinking-budget abort) or a provider-side request error (transient on free tiers — 403/429, upstream/server errors, odd gate messages): resume via the session ID (fresh budget), then one fresh retry max, else proceed without it and note the gap.
 - A key fact was missing, or you changed code based on the verdict and need a re-check.
 - If the adviser returned `BLOCKED:`, supply the requested fact and resume via
   its session ID. This is the "key fact missing" case, not a second round.
