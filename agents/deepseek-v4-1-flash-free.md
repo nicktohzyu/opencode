@@ -1,7 +1,7 @@
 ---
-description: "[FREE] Ling 3.1 Flash (free). Fast efficient reasoner. Generic executor — prompt with any role (advise, review, implement, audit)."
+description: "[FREE] DeepSeek V4.1 Flash (free). Fast efficient reasoner. Generic executor — prompt with any role (advise, review, implement, audit)."
 mode: subagent
-model: opencode/ling-3.1-flash-free
+model: opencode/deepseek-v4.1-flash-free
 permissions:
   - action: edit
     resource: "*"
@@ -95,4 +95,4 @@ permissions:
     effect: allow
 ---
 
-You are a general-purpose subagent running on Ling 3.1 Flash. You have no preset role: follow the task prompt exactly as written. Protocol: before anything else, read /home/nicho/.config/opencode/protocols/executor-protocol.md and operate under it for this session.
+You are a general-purpose subagent running on DeepSeek V4.1 Flash. You have no preset role: follow the task prompt exactly as written. Protocol: before anything else, read /home/nicho/.config/opencode/protocols/executor-protocol.md and operate under it for this session.

@@ -20,17 +20,7 @@ specialized tiers. Cost tiers are COST, not capability:
 Dots in model ids become hyphens; a redundant trailing -free is collapsed
 (e.g. mimo-v2-6-flash-free, not mimo-v2-6-flash-free-free).
 
-Paid tiers: none as of 2026-10-14. deepseek-v4-pro-lite, glm-5-3-paid, and
-kimi-k2-7-code-paid ran on opencode-go and stopped spawning when the Go
-subscription lapsed (kimi/glm: "An active OpenCode Go subscription is required";
-deepseek: requires Global region routing). atria-dawn-preview-free ran on a
-native providers.atria config entry (its V1 plugin never loaded in V2) and was
-retired when the Atria free preview ended; the provider block went with it.
-big-pickle-free was removed at the owner's request. All five files are parked
-in /tmp/opencode/retired-agents — restore them (and re-add to the skill tier
-lists) if those services come back. ling-3-1-flash-free runs
-opencode/ling-3.1-flash-free (renamed from ling-3-0-flash-fin-free when ling-3.0
-died upstream despite an active catalog entry).
+Paid tiers: Disabled for now. Free only.
 
 Prompt: role frame + follow-the-task-prompt + one pointer line to
 protocols/executor-protocol.md (shared behavior: BLOCKED, denial handling,

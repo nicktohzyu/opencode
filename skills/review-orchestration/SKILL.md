@@ -9,7 +9,7 @@ Spawn executor subagents via the subagent tool (one call per agent ID) in a sing
 
 ## Tiers (cost, not capability — use full agent IDs, short names do not resolve)
 
-- `[FREE]`: ling-3-1-flash-free, mimo-v2-6-flash-free, muse-spark-1-3-contributor-free, nemotron-3-ultra-free, step-5-preview-free, space-bunny-free
+- `[FREE]`: deepseek-v4-1-flash-free, mimo-v2-6-flash-free, muse-spark-1-3-contributor-free, nemotron-3-ultra-free, step-5-preview-free, space-bunny-free
 
 ## Effort per spawn
 
