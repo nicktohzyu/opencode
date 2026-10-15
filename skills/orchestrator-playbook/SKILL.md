@@ -1,6 +1,6 @@
 ---
 name: orchestrator-playbook
-description: Orchestrator-side playbook for delegating work to subagents via the subagent tool — picking advisors vs reviewers, writing prompts that produce triageable output, running parallel independent reviews, validating dismissals, verifying with execution. Triggers on subagent, subagent tool, delegate, orchestrate, parallel review, second opinion, triage findings.
+description: Orchestrator-side playbook for delegating work to subagents via the subagent tool — picking advisors vs reviewers, writing prompts that produce triageable output, running parallel independent reviews, validating dismissals, verifying with execution. Triggers on subagent, subagent tool, delegate, orchestrate, parallel review, second opinion, triage findings, test suite, test output, build output, logs, log sweep, wide grep, codebase-wide search, large tool output, context offload.
 ---
 
 # Subagent Playbook

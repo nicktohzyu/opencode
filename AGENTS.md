@@ -14,6 +14,8 @@ Reserve code comments exclusively for non-trivial, nuanced sections that would n
 
 When performing multiple independent tool calls (e.g., reading several files, running concurrent searches, or executing unrelated commands), prefer batching them into a single response with multiple tool invocations. Prefer running parallel tool calls over sequential ones whenever the calls do not depend on each other's results. This reduces round-trips, improves latency, and lowers costs. Each sequential tool call return triggers the input token cache fee, hence we should try to minimize the number of turns.
 
+Output size is a context cost, not just a latency cost, and it applies to a single call: before running anything that will return more than you can read in full — a test suite, a log sweep, a wide grep — narrow it first (`head`, `grep -c`, `jq`, or let the harness truncate to a file). If the raw output would still be large, load the `orchestrator-playbook` skill and follow its context-offload rule rather than running it straight into the transcript. Never offload what you must reason over raw: offload facts, not judgment.
+
 ## Interaction
 
 Prefer over-clarifying, ask questions liberally. Catch assumptions and uncertainties. Ask if a request admits multiple readings that change the outcome, if new questions or uncertainties surface mid-task, or before any hard-to-reverse action. Prefer batching questions but do also ask follow up questions when relevant, or if new uncertainties surface.
@@ -24,6 +26,6 @@ Before acting, run a final reasoning check: does this action match the request a
 
 ## Delegation
 
-Whenever you consider delegating work via the subagent tool — parallel retrieval, review, second opinions, test execution, external lookup — load the `orchestrator-playbook` skill first and follow it. Whether delegation pays is the skill's decision, not this file's. Do not pre-decide yet.
+Whenever you consider delegating work via the subagent tool — parallel retrieval, review, second opinions, test execution, external lookup, noisy-output offload — load the `orchestrator-playbook` skill first and follow it. Whether delegation pays is the skill's decision, not this file's. Do not pre-decide yet.
 
 The skill maps the task to a role — advisor (approach/design), reviewer (implementation), researcher (external lookup), verifier (test execution). It explains how to decide whether using a subagent is appropriate, and specific instructions on the usage of these agents.
