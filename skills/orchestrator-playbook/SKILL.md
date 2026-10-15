@@ -49,8 +49,8 @@ Delegate:
 - Parallel review (`review-orchestration`) — implementation-level review of
   a fixed target; adversarial
 - Mapping 3+ independent unknowns with zero shared context
-- Verbose offload: dozens of tool results in, one summary out
-  (>1000 tokens you won't reuse)
+- Context offload: noisy high-volume output (test suites, log sweeps, wide
+  greps) — see *Context offload* below
 - Read-only or cheap-model isolation, or an explicit verification checkpoint
 - Test, lint, typecheck, or harness execution (verifier tier) — output is
   self-verifying by construction
@@ -62,6 +62,25 @@ Do not delegate:
 - Investigation that will birth a deeper question mid-stream
 - Anything where verifying equals redoing
 - Implementation, commits, pushes, releases — primary-only
+
+### Context offload: noisy work never enters the transcript
+
+Raw tool output is the biggest context consumer, and context is resent every
+turn and degrades as it grows (context rot) — run the noise in a child and let
+only the distilled result come back. Compaction is the fallback, not the plan.
+
+- **Cap the return.** The brief fixes the shape (findings plus `file:line` or
+  URL evidence, ≤N lines); an uncapped return only moves the bloat.
+- **The raw lives in the child.** Executors cannot leave artifacts behind, so
+  resume the child's session for a later slice instead of re-running.
+- **Filter before spawning.** For small noise, narrow the query (`grep -c`,
+  `head`, `jq`) or let the harness truncate large output to a file; Code Mode
+  can compose results and return only the distilled value. One sweep is one
+  spawn, not many.
+- **Never offload what you must reason over raw.** Material that only makes
+  sense against the in-flight conversation stays home — offload facts, not
+  judgment (summarizing judgment through a child fragments implicit
+  decisions).
 
 Hard invariants:
 1. Uncited claims are rejections, not findings — require `file:line` plus a
