@@ -12,6 +12,10 @@ Spawn executor subagents via the subagent tool (one call per agent ID) in a sing
 - deepseek-v4-1-flash-free, mimo-v2-6-flash-free, muse-spark-1-3-contributor-free,
   nemotron-3-ultra-free, step-5-preview-free, space-bunny-free (all free for now)
 
+Default reviewer picks: deepseek + muse (fast and reliable); add
+nemotron-3-ultra-free for more diversity. space-bunny, step-5, and mimo are
+capable but slower and flakier — pick them deliberately (see `agents/README`).
+
 ## Effort per spawn
 
 The roster names agents; the `subagent` tool's `model` parameter also

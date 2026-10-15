@@ -21,6 +21,7 @@ Do not use for pure implementation work, single-file edits, or when the primary 
 ## Selection (model-agnostic)
 
 - Pick a small, diverse set of executor subagents whose model family differs from the primary (the roster is free-only). Any `*-free` executor works since its role is dynamically specified by your prompt.
+- Default picks: deepseek + muse (fast and reliable); add nemotron-3-ultra-free for a third independent opinion. space-bunny, step-5, and mimo are capable but slower and flakier — pick them deliberately (see `agents/README`).
 - Prefer diverse families over similar ones. Never spawn every available executor.
 - Subagents are terminal executors and cannot delegate further.
 
