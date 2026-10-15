@@ -69,8 +69,8 @@ their safe and destructive modes are indistinguishable by prefix. Verified
 live: a chain (`;`, `&&`, `||`, `|`, `( )`) is checked per segment — every
 command in it must individually match the allowlist, or the whole chain is
 denied. (Chains of allowlisted commands still run; chaining composes within
-the allowlist, not past it.) Each tier's boundary is restated subagent-side in ../protocols/ (executor-, verifier-,
-researcher-protocol.md). Rules 1–4 are identical across the three files —
+the allowlist, not past it.) Each tier's boundary is restated subagent-side in ../protocols/
+(executor-protocol.md, verifier-protocol.md, researcher-protocol.md). Rules 1–4 are identical across the three files —
 keep them in sync when editing; the sync note lives here, not in the
 protocol files, because those are read on every spawn.
 
@@ -82,20 +82,20 @@ Adding a model
    string (e.g. file `muse-spark-1-3-...` but `model: opencode/muse-spark-1.3-...`).
    Verify with `opencode models` — a near-miss fails only at spawn, not at load.
 2. Keep the permission block and two-sentence prompt byte-identical.
-3. Add the new agent ID to the Tiers list in
+3. Add the new agent ID to the Roster section in
    ../skills/review-orchestration/SKILL.md (full names only — short names do
    not resolve).
 4. Cross-check every `model:` value against the registry before restarting:
    opencode models > /tmp/models.txt, then confirm each file's value matches
    a line verbatim (dots, not filename hyphens).
-5. Confirm the skill tier list and the roster agree:
+5. Confirm the skill roster and the agents directory agree:
    ls agents | sed 's/\.md$//' | sort > /tmp/roster.txt, then check every
-   roster name appears in the Tiers list of
+   roster name appears in the Roster section of
    ../skills/review-orchestration/SKILL.md (verifier-*/researcher-* are
    intentionally absent — single-model tiers, not reviewers). A missing entry
    fails only at orchestration time, not at load.
 6. Restart opencode (agents/skills/permissions load at startup).
 
-Retiring a model: delete its file, remove it from the skill tier list,
+Retiring a model: delete its file, remove it from the skill roster list,
 restart. If in doubt, keep the file — a stale roster entry costs nothing
 until invoked, while a missing one breaks saved prompts that name it.

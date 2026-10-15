@@ -7,13 +7,14 @@ description: Use when orchestrating a parallel code review across executor subag
 
 Spawn executor subagents via the subagent tool (one call per agent ID) in a single message for parallel execution. Each runs a different model; its description states its cost tier and strengths. They are terminal executors and cannot delegate further. Agents carry no preset role — your per-review brief is the role.
 
-## Tiers (cost, not capability — use full agent IDs, short names do not resolve)
+## Roster (full agent IDs — short names do not resolve)
 
-- `[FREE]`: deepseek-v4-1-flash-free, mimo-v2-6-flash-free, muse-spark-1-3-contributor-free, nemotron-3-ultra-free, step-5-preview-free, space-bunny-free
+- deepseek-v4-1-flash-free, mimo-v2-6-flash-free, muse-spark-1-3-contributor-free,
+  nemotron-3-ultra-free, step-5-preview-free, space-bunny-free (all free for now)
 
 ## Effort per spawn
 
-The tier list names agents; the `subagent` tool's `model` parameter also
+The roster names agents; the `subagent` tool's `model` parameter also
 accepts `provider/model#variant` per call (e.g.
 `opencode/muse-spark-1.3-contributor-free#xhigh`). The agent file's model is
 only the default — the parent can scale reasoning effort per task: deep for
@@ -34,7 +35,9 @@ fails the spawn with `Variant unavailable for <model>: <variant>`.
 
 **Guideline:** Match focus to change type. Default to generalist for unknown/small changes. Use specialists for known risk areas. Never spawn all — pick 2–3 max per review.
 
-**Diversity rule:** Prefer diverse model families from different providers/lineages. Independent models reduce correlated blind spots.
+**Diversity rule:** Prefer diverse model families — all roster models are served by the opencode provider, so upstream lineage is what differs. Independent models reduce correlated blind spots.
+
+**Data sensitivity:** confidential code goes only to zero-retention lineages (deepseek, space-bunny, step-5); muse, mimo, and nemotron free endpoints may log or train on prompts — keep them out of sensitive reviews (see `agents/README`).
 
 ## Brief
 
@@ -65,7 +68,7 @@ declares:
 - The roster is free-only: spend the budget on diverse model families rather than tier escalation. Re-run a narrow pass on changed regions instead of escalating.
 - Optional pre-pass: run a cheap local check (`git diff --stat`, linter) and include its output in the brief so reviewers skip mechanically-detectable issues.
 - Write a custom brief per review with the diff context and the exact output format you want back. Do not rely on a shared spec (`templates/review-spec.md` is a template to copy from, not an auto-applied contract).
-- Treat outputs as candidates, not truth. Confirmed by two model families is strong; a lone flag is suspect. Dedupe, rank by severity, surface criticals prominently. Flag disagreements for user attention.
+- Treat outputs as candidates, not truth. Confirmed by two model families is strong; a lone flag is suspect. Dedupe, rank by severity, surface SEVERE/HIGH prominently. Flag disagreements for user attention.
 
 ## On failure
 

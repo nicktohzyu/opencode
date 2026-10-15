@@ -5,7 +5,7 @@ description: Orchestrator-side playbook for delegating work to subagents via the
 
 # Subagent Playbook
 
-Complements the `review-orchestration` skill (tiered reviewer selection) and
+Complements the `review-orchestration` skill (reviewer selection) and
 the `adviser-chat` skill (single-round second opinions). This skill covers the
 workflow around them: how to prompt, how to triage, and how to verify.
 
@@ -14,10 +14,10 @@ workflow around them: how to prompt, how to triage, and how to verify.
 1. **Subagents advise; you decide and you write.** Never apply subagent output
    verbatim — not code sketches, not "fixes." Assume every output contains at
    least one confident error until verified.
-2. **Cheap breadth, then targeted depth.** Free-tier models in parallel for
-   findings (diverse lineages give independent signals); one advisor serially
-   for judgment. The roster is free-only — spend depth on diverse families
-   the cheap pass.
+2. **Cheap breadth, then targeted depth.** Free models in parallel for
+   findings and judgment alike (diverse lineages give independent signals).
+   The roster is free-only — spend depth on diverse families rather than
+   tier escalation.
 3. **Dismissals get more scrutiny than fixes.** A wrongly-applied fix wastes
    minutes; a wrongly-dismissed finding ships a bug. Task an advisor explicitly
    to attack your dismissals before you act on a triage.
@@ -36,9 +36,11 @@ workflow around them: how to prompt, how to triage, and how to verify.
 
 Default: do the work yourself. Delegate only when the output reduces to
 evidence you can spot-check in seconds — if verifying equals redoing, you
-have delegated nothing. Executors can find but cannot verify (read-only, no
-execution, no network), so every delegated claim ships a verification debt
-you must pay by re-running the read/grep yourself.
+have delegated nothing. Plain executors can find but cannot verify
+(read-only, no execution, no network), so their claims ship a verification
+debt you must pay by re-running the read/grep yourself. Verifier output is
+self-verifying by construction, and researcher claims arrive with sources —
+spot-check still required, but the debt is small.
 
 Delegate:
 - Mechanically-verifiable retrieval: call sites, grep patterns, file locations
@@ -93,9 +95,10 @@ Effort per spawn).
 
 ### Blocked and denied: subagents inherit their tier protocol
 
-Each tier operates under its own protocol file (`protocols/executor-`,
-`verifier-`, `researcher-protocol.md`, pointed to from the agent files): on
-missing input they return `BLOCKED:` plus exactly what is needed; on tool
+Each tier operates under its own protocol file
+(`protocols/executor-protocol.md`, `verifier-protocol.md`,
+`researcher-protocol.md`, pointed to from the agent files): on missing
+input they return `BLOCKED:` plus exactly what is needed; on tool
 denial they reformulate at most once. Do not re-explain this in prompts —
 brief the triageable output format, and resume via the session ID with answers
 when BLOCKED arrives.
