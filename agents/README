@@ -85,16 +85,13 @@ Adding a model
 3. Add the new agent ID to the Roster section in
    ../skills/review-orchestration/SKILL.md (full names only — short names do
    not resolve).
-4. Cross-check every `model:` value against the registry before restarting:
-   opencode models > /tmp/models.txt, then confirm each file's value matches
-   a line verbatim (dots, not filename hyphens).
-5. Confirm the skill roster and the agents directory agree:
-   ls agents | sed 's/\.md$//' | sort > /tmp/roster.txt, then check every
-   roster name appears in the Roster section of
-   ../skills/review-orchestration/SKILL.md (verifier-*/researcher-* are
-   intentionally absent — single-model tiers, not reviewers). A missing entry
-   fails only at orchestration time, not at load.
-6. Restart opencode (agents/skills/permissions load at startup).
+4. Run `scripts/verify-roster.sh` and fix anything it reports: it checks
+   every `model:` value against `opencode models` and every executor agent
+   against the Roster section of ../skills/review-orchestration/SKILL.md
+   (verifier-*/researcher-* are intentionally absent — single-model tiers,
+   not reviewers; a missing entry fails only at orchestration time, not at
+   load).
+5. Restart opencode (agents/skills/permissions load at startup).
 
 Retiring a model: delete its file, remove it from the skill roster list,
 restart. If in doubt, keep the file — a stale roster entry costs nothing
