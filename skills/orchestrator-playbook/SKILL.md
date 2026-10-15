@@ -68,7 +68,9 @@ Hard invariants:
    verbatim quote for repo claims, source URL plus a verbatim quote for
    external claims.
 2. Never chain subagent output into another subagent — it compounds
-   ungrounded inference.
+   ungrounded inference. One carve-out: adviser-chat's design-partner
+   crossings — bounded (≤2), primary-moderated, new-evidence-only, and facts
+   still exit to verification.
 3. Never delegate past the point where verifying equals redoing.
 
 ## Prompt skeleton
@@ -105,8 +107,9 @@ when BLOCKED arrives.
 
 ## Workflow
 
-1. **Debate the design first** (advisor, divergent perspective) → converge in
-   writing before code exists.
+1. **Debate the design first** (advisor, divergent perspective; design-partner
+   mode for decisions that warrant crossings) → converge in writing before
+   code exists.
 2. **Review the plan before implementation** — cheapest place to catch
    mistakes (scoping, API shape, failure modes). Ask for a sketch in matching
    style.

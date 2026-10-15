@@ -59,3 +59,29 @@ Beyond the playbook's prompt skeleton, every advisor brief declares:
   its session ID. This is the "key fact missing" case, not a second round.
 
 Default is one round. No open debate loops.
+
+## Design partner (the bounded exception)
+
+Design decisions are the one place multi-crossing dialogue earns its cost:
+there is no answer key, the primary is the judge, and continuity — one
+partner that remembers the phase — is the actual product. Still bounded:
+
+- **One session per design phase.** Pick the partner once, resume it by
+  session ID at milestones. Default: `muse-spark-1.3-contributor-free` (fast
+  and reliable among the free tiers). Swap only if muse is unavailable or
+  rate-limited, or the material is explicitly sensitive (space-bunny or
+  step-5, zero-retention).
+- **Round 0 stays independent.** Both sides write positions before seeing
+  each other's; diversity is real only before the first exchange.
+- **Crossings are capped and structured.** Max 2 by default. Each side gets
+  the other's last position verbatim plus new artifacts — diffs, docs, file
+  paths (it can read the repo), not re-descriptions — and replies only with
+  concessions, holdings backed by NEW evidence, and factual questions for
+  verification. No new falsifiable claim = a pass; end there.
+- **Hold under pressure.** Brief both sides to keep well-supported positions
+  and adopt the other's answer only on new evidence — agreement is not
+  verification.
+- **Facts exit the dialogue.** Factual disputes go to execution (verifier),
+  never to another round. The primary decides.
+- **Reassess cheaply.** If the second crossing never changes the synthesis
+  across a few decisions, make one crossing the cap.
