@@ -18,6 +18,9 @@ permissions:
   - action: subagent
     resource: "*"
     effect: deny
+  - action: execute
+    resource: "*"
+    effect: deny
   - action: external_directory
     resource: "~/.config/opencode/protocols/**"
     effect: allow

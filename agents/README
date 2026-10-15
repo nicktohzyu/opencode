@@ -34,8 +34,9 @@ Executors observe and report; only the primary acts. Base profile (all
 files): read tools, protocols/ + /tmp/ dirs, git read-only
 subcommands (plain and `git -C` forms), read-only text tools
 (wc/sort/uniq/cut/tr/jq/rg/grep, space-required form so bare invocations
-can't hang on stdin). Denied everywhere: edit (covers writes), task
-(executors are terminal), all other bash.
+can't hang on stdin). Denied everywhere: edit (covers writes), subagent
+(executors are terminal), execute (Code Mode — its `fetch` egress and
+session/worktree utilities bypass the other rules), all other bash.
 - Executors: base profile, webfetch/websearch denied. Hermetic by
   construction — output derives only from repo and prompt.
 - Verifier: base profile plus execution-shaped bash (pytest, npm test,
