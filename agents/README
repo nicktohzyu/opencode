@@ -22,6 +22,24 @@ Dots in model ids become hyphens; a redundant trailing -free is collapsed
 
 Paid tiers: Disabled for now. Free only.
 
+Data terms
+----------
+Free endpoints differ in what they do with prompts — this decides which
+models may see confidential code:
+- Zero-retention (safe for sensitive work): deepseek-v4.1-flash-free,
+  space-bunny-free, longcat-2.5-preview-free, step-5-preview-free.
+- Logged / used for improvement: mimo-* and nemotron-* (nemotron terms:
+  "Trial use only — do not submit personal or confidential data").
+- Trains on prompts and completions: muse-spark-1.3-contributor-free — the
+  recorded price of the contributor tier.
+- cat-jam-free: no training, 30 days retention for abuse monitoring.
+Policy: confidential repositories run only on zero-retention models — on
+the roster that is deepseek, space-bunny, and step-5. The verifier and
+researcher tiers are pinned accordingly (deepseek for execution,
+space-bunny for lookup). Muse joins only on explicit request, for
+non-confidential work. Terms change with the free period — re-check before
+adding or swapping.
+
 Prompt: role frame + follow-the-task-prompt + one pointer line to
 protocols/executor-protocol.md (shared behavior: BLOCKED, denial handling,
 sandbox discipline). Deliberately minimal — output formats and specs belong
