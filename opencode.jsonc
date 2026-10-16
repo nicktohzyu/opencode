@@ -35,6 +35,9 @@
         "budgetMinChars": 1500,
         "keepErrors": true,
         "protectUserMessages": true,
+        // Prose is never compressed: user text is protected above, and this
+        // makes assistant text ineligible too, so only tool output is dropped.
+        "compressText": false,
 
         // Summariser: uncapped (spend is not the constraint), larger source
         // window per digest, cache-stable replanning.
@@ -50,9 +53,11 @@
         "summaryCacheMax": 2000,
         "retryMaxAttempts": 5,
 
-        // Deterministic checkpoint supersedes native compaction (faithful
-        // when the session model is the summariser).
-        "compactionCheckpoint": true
+        // Native compaction instead of the deterministic checkpoint: when the
+        // conversation alone outgrows the budget, the summariser keeps the arc
+        // of the prose, where the checkpoint keeps only the last 3 messages of
+        // each role. Costs one session-model call at compaction time.
+        "compactionCheckpoint": false
       }
     }
   ]
