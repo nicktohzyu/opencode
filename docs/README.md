@@ -12,6 +12,7 @@ root.
 | `delegation-design-atria.md` | Delegation policy: conclusions and justification (adversarial adviser round) |
 | `delegation-design-muse.md` | Delegation policy: conclusions and proposed design |
 | `context-offload-cue-review.md` | Context-offload cue: the gap, muse's review, and the fix |
+| `context-policy-prose-and-compaction.md` | Context policy: prose preserved, thinking uncompressed, native compaction as the valve |
 
 Note: this repository is public. Records quote feedback and model critiques —
 keep credentials, tokens, and anything private out of them.
