@@ -10,5 +10,50 @@
     { "action": "webfetch", "resource": "*", "effect": "allow" },
     { "action": "websearch", "resource": "*", "effect": "allow" },
     { "action": "external_directory", "resource": "/tmp/*", "effect": "allow" }
+  ],
+
+  // @bandonker/opencode-context-pruner — deterministic pruning plus an
+  // optional LLM summariser. Holds the live request near 95k of the 200k
+  // window: budget = 200000*0.6 - 8192 = 111808, target = 95036,
+  // steady (0.5) = 100000, ceiling = min(95036, 100000) = 95036.
+  // Plugin options resolve options -> env -> file, so these flat keys are
+  // read from `options` directly.
+  "plugins": [
+    {
+      "package": "@bandonker/opencode-context-pruner",
+      "options": {
+        // Budget / ceiling.
+        "budgetRatio": 0.6,
+        "targetRatio": 0.85,
+        "maxOutputReserve": 8192,
+        "proactiveSummarize": true,
+        "steadyTargetRatio": 0.5,
+
+        // Deterministic layer: only touch genuinely bulky output; a raised
+        // over-budget floor keeps small dense evidence out of the churn.
+        "minChars": 2000,
+        "budgetMinChars": 1500,
+        "keepErrors": true,
+        "protectUserMessages": true,
+
+        // Summariser: uncapped (spend is not the constraint), larger source
+        // window per digest, cache-stable replanning.
+        "autoSummarizeMaxCalls": 0,
+        "autoSummarizeMinTokens": 2000,
+        "maxAutoSummaries": 0,
+        "compressMaxSourceChars": 48000,
+        "minReplanTokens": 1000,
+
+        // Recoverability / durability.
+        "recallKeep": 200,
+        "summaryKeep": 500,
+        "summaryCacheMax": 2000,
+        "retryMaxAttempts": 5,
+
+        // Deterministic checkpoint supersedes native compaction (faithful
+        // when the session model is the summariser).
+        "compactionCheckpoint": true
+      }
+    }
   ]
 }
