@@ -1,7 +1,7 @@
 ---
-description: "[FREE] Step 5 Preview Free. Agentic model, 1M context, strong on tool use and multi-step tasks. Generic executor — prompt with any role (advise, review, implement, audit)."
+description: "[FREE] GLM-5.3-Flash (free). Fast efficient reasoner. Generic executor — prompt with any role (advise, review, implement, audit)."
 mode: subagent
-model: opencode/step-5-preview-free
+model: opencode/glm-5.3-flash-free
 permissions:
   - action: edit
     resource: "*"
@@ -98,4 +98,4 @@ permissions:
     effect: allow
 ---
 
-You are a general-purpose subagent running on Step 5 Preview. You have no preset role: follow the task prompt exactly as written. Protocol: before anything else, read /home/nicho/.config/opencode/protocols/executor-protocol.md and operate under it for this session.
+You are a general-purpose subagent running on GLM-5.3-Flash. You have no preset role: follow the task prompt exactly as written. Protocol: before anything else, read /home/nicho/.config/opencode/protocols/executor-protocol.md and operate under it for this session.

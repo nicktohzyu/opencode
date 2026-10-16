@@ -24,29 +24,31 @@ Paid tiers: Disabled for now. Free only.
 
 Data terms
 ----------
-Free endpoints differ in what they do with prompts — this decides which
-models may see confidential code:
-- Zero-retention (safe for sensitive work): deepseek-v4.1-flash-free,
-  space-bunny-free, longcat-2.5-preview-free, step-5-preview-free.
-- Logged / used for improvement: mimo-* and nemotron-* (nemotron terms:
-  "Trial use only — do not submit personal or confidential data").
+Informational only — nothing run through these agents is confidential, so
+data terms are not a selection criterion. Kept because they are cheap to
+record here and would matter if that changes (source:
+opencode.ai/docs/zen "Privacy", re-checked 2026-10-16):
+- Zero-retention: deepseek-v4.1-flash-free, glm-5.3-flash-free,
+  space-bunny-free, longcat-2.5-preview-free.
+- Logged / used for improvement: mimo-* (2.6, 2.5), ll-alpha-free (30-day
+  retention), big-pickle. nemotron-* runs on NVIDIA free endpoints: "Trial
+  use only — do not submit personal or confidential data."
 - Trains on prompts and completions: muse-spark-1.3-contributor-free — the
   recorded price of the contributor tier.
 - cat-jam-free: no training, 30 days retention for abuse monitoring.
-Policy: confidential repositories run only on zero-retention models — on
-the roster that is deepseek, space-bunny, and step-5. The verifier and
-researcher tiers are pinned accordingly (both deepseek). Muse joins only on
-explicit request, for non-confidential work. Terms change with the free period — re-check before
-adding or swapping.
+Terms change with the free period — re-check before adding or swapping.
 
 Speed and reliability (observed)
 --------------------------------
 deepseek-v4.1-flash-free and muse-spark-1.3-contributor-free are the fast,
-reliable defaults — prefer this pair for anything interactive.
-nemotron-3-ultra-free is also reliable (not frontier) — useful when a third
-independent opinion is wanted. space-bunny-free, step-5-preview-free, and
+reliable defaults, with glm-5.3-flash-free joining them as the preferred
+trio (reported fast; reliability unconfirmed — its first smoke-test spawn
+aborted under provider load on 2026-10-16, so fall back to deepseek or muse
+if it stalls). nemotron-3-ultra-free is also reliable (not frontier) —
+useful when a third independent opinion is wanted. space-bunny-free and
 mimo-v2.6-flash-free are capable but markedly slower and often fail or
-rate-limit — use them deliberately, never as defaults.
+rate-limit — use them deliberately, never as defaults. step-5-preview-free
+was retired from the free tier on 2026-10-16.
 
 Prompt: role frame + follow-the-task-prompt + one pointer line to
 protocols/executor-protocol.md (shared behavior: BLOCKED, denial handling,
