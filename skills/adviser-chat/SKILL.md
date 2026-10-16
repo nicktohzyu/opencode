@@ -71,8 +71,8 @@ partner that remembers the phase — is the actual product. Still bounded:
   session ID at milestones. Default: `glm-5-3-flash-free` (run crossings on
   `#max` when the decision is high-stakes) — swap to
   `muse-spark-1.3-contributor-free` or `deepseek-v4-1-flash-free` if GLM is
-  unavailable, rate-limited, or slow. GLM's speed is unconfirmed: its first
-  smoke-test spawn aborted under provider load on 2026-10-16.
+  unavailable, rate-limited, or slow. Its first spawn aborted under provider
+  load (2026-10-16); the retry passed, but that is only one good data point.
 - **Round 0 stays independent.** Both sides write positions before seeing
   each other's; diversity is real only before the first exchange.
 - **Crossings are capped and structured.** Max 2 by default. Each side gets
