@@ -21,7 +21,7 @@ Do not use for pure implementation work, single-file edits, or when the primary 
 ## Selection (model-agnostic)
 
 - Pick a small, diverse set of executor subagents whose model family differs from the primary (the roster is free-only). Any `*-free` executor works since its role is dynamically specified by your prompt.
-- Default picks: deepseek + muse (fast and reliable); add nemotron-3-ultra-free for a third independent opinion. space-bunny, step-5, and mimo are capable but slower and flakier — pick them deliberately (see `agents/README`).
+- Default picks: deepseek, muse, or GLM (fast and reliable); add nemotron-3-ultra-free for a third independent opinion. space-bunny and mimo are capable but slower and flakier — pick them deliberately (see `agents/README`).
 - Prefer diverse families over similar ones. Never spawn every available executor.
 - Subagents are terminal executors and cannot delegate further.
 
@@ -68,10 +68,11 @@ there is no answer key, the primary is the judge, and continuity — one
 partner that remembers the phase — is the actual product. Still bounded:
 
 - **One session per design phase.** Pick the partner once, resume it by
-  session ID at milestones. Default: `muse-spark-1.3-contributor-free` (fast
-  and reliable among the free tiers). Swap only if muse is unavailable or
-  rate-limited, or the material is explicitly sensitive (space-bunny or
-  step-5, zero-retention).
+  session ID at milestones. Default: `glm-5-3-flash-free` (run crossings on
+  `#max` when the decision is high-stakes) — swap to
+  `muse-spark-1.3-contributor-free` or `deepseek-v4-1-flash-free` if GLM is
+  unavailable, rate-limited, or slow. GLM's speed is unconfirmed: its first
+  smoke-test spawn aborted under provider load on 2026-10-16.
 - **Round 0 stays independent.** Both sides write positions before seeing
   each other's; diversity is real only before the first exchange.
 - **Crossings are capped and structured.** Max 2 by default. Each side gets

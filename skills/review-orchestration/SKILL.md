@@ -9,26 +9,27 @@ Spawn executor subagents via the subagent tool (one call per agent ID) in a sing
 
 ## Roster (full agent IDs — short names do not resolve)
 
-- deepseek-v4-1-flash-free, mimo-v2-6-flash-free, muse-spark-1-3-contributor-free,
-  nemotron-3-ultra-free, step-5-preview-free, space-bunny-free (all free for now)
+- deepseek-v4-1-flash-free, glm-5-3-flash-free, mimo-v2-6-flash-free,
+  muse-spark-1-3-contributor-free, nemotron-3-ultra-free, space-bunny-free
+  (all free for now; step-5-preview-free retired 2026-10-16)
 
-Default reviewer picks: deepseek + muse (fast and reliable); add
-nemotron-3-ultra-free for more diversity. space-bunny, step-5, and mimo are
-capable but slower and flakier — pick them deliberately (see `agents/README`).
+Default reviewer picks: deepseek, muse, or GLM (fast and reliable); add
+nemotron-3-ultra-free for more diversity. space-bunny and mimo are capable
+but slower and flakier — pick them deliberately (see `agents/README`).
 
 ## Effort per spawn
 
 The roster names agents; the `subagent` tool's `model` parameter also
 accepts `provider/model#variant` per call — e.g.
 `opencode/deepseek-v4.1-flash-free#max` for deep passes or `#low` for
-mechanical sweeps; `opencode/muse-spark-1.3-contributor-free` tops out at
-`#xhigh`. The agent file's model is only the default — the parent can scale
-reasoning effort per task: deep for high-stakes or narrow re-check passes,
-cheap for mechanical sweeps. Variants are catalog-defined per model and
-change over time; an unavailable variant fails the spawn with
-`Variant unavailable for <model>: <variant>`. A model ID that is not in the
-roster also works — useful for trialing new free models before adding an
-agent file.
+mechanical sweeps (GLM-5.3-Flash takes the same `low`/`high`/`max`);
+`opencode/muse-spark-1.3-contributor-free` tops out at `#xhigh`. The agent
+file's model is only the default — the parent can scale reasoning effort per
+task: deep for high-stakes or narrow re-check passes, cheap for mechanical
+sweeps. Variants are catalog-defined per model and change over time; an
+unavailable variant fails the spawn with `Variant unavailable for
+<model>: <variant>`. A model ID that is not in the roster also works —
+useful for trialing new free models before adding an agent file.
 
 ## Example Focus Areas (pick per review, instruct subagent)
 
@@ -45,7 +46,7 @@ agent file.
 
 **Diversity rule:** Prefer diverse model families — all roster models are served by the opencode provider, so upstream lineage is what differs. Independent models reduce correlated blind spots.
 
-**Data sensitivity:** confidential code goes only to zero-retention lineages (deepseek, space-bunny, step-5); muse, mimo, and nemotron free endpoints may log or train on prompts — keep them out of sensitive reviews (see `agents/README`).
+**Data terms (informational):** nothing here is confidential, so this is not a constraint; for reference, zero-retention = deepseek/GLM/space-bunny, while muse trains on prompts and the mimo/nemotron/ll-alpha/big-pickle free endpoints may log or train (see `agents/README`).
 
 ## Brief
 
